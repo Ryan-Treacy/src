@@ -1,15 +1,16 @@
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
 
 public class UserInfoGUI extends JFrame {
@@ -21,7 +22,7 @@ public class UserInfoGUI extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void buildLogin() {
+	public static void buildLogin(){
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -45,31 +46,41 @@ public class UserInfoGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblWelcomeToUmw = new JLabel("Welcome to UMW Connect!");
-		lblWelcomeToUmw.setBounds(108, 24, 220, 15);
-		contentPane.add(lblWelcomeToUmw);
-				
-		JButton btnNewButton = new JButton("Sign On");
-		btnNewButton.setBounds(244, 203, 194, 25);
-		btnNewButton.setEnabled(true);
-		contentPane.add(btnNewButton);
-
-		JLabel lblNewLabel = new JLabel("User ID:");
-		lblNewLabel.setBounds(59, 77, 70, 15);
+		JLabel lblUserName = new JLabel("User:");
+		lblUserName.setBounds(60, 82, 99, 15);
+		contentPane.add(lblUserName);
+		
+		JLabel lblNewLabel = new JLabel("Password:");
+		lblNewLabel.setBounds(28, 123, 99, 15);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(40, 115, 89, 15);
-		contentPane.add(lblPassword);
-		
 		textField = new JTextField();
-		textField.setBounds(129, 75, 199, 19);
+		textField.setBounds(129, 80, 255, 19);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(129, 113, 199, 19);
-		contentPane.add(passwordField);
+		JButton btnConnect = new JButton("Connect");
+		btnConnect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				validUserPass();
+			}
+		});
+		btnConnect.setBounds(165, 191, 117, 25);
+		contentPane.add(btnConnect);
 		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(129, 121, 258, 19);
+		contentPane.add(passwordField);
+	}
+	
+	public void validUserPass(){
+		UserInfo userObj = new UserInfo();
+		userObj.setUser(textField.getText());
+		userObj.setPassword(passwordField.getText());
+		if((userObj.getUser().isEmpty()) || (userObj.getPassword().isEmpty())){
+			JOptionPane.showMessageDialog(null, "Invaild Username or Password");
+		}else{
+			JOptionPane.showMessageDialog(null, textField.getText() + passwordField.getText());
+		}
 	}
 }
