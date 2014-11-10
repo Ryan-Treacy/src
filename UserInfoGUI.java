@@ -80,7 +80,11 @@ public class UserInfoGUI extends JFrame {
 		if((userObj.getUser().isEmpty()) || (userObj.getPassword().isEmpty())){
 			JOptionPane.showMessageDialog(null, "Invaild Username or Password");
 		}else{
-			JOptionPane.showMessageDialog(null, userObj.getUser() + userObj.getPassword());
+			newUserCheck();
 		}
+	}
+	
+	public void newUserCheck(){
+		// file input output stuff here.
 	}
 }
