@@ -1,15 +1,25 @@
+import java.io.File;
+
+import javax.swing.JOptionPane;
+
 
 public class FileIO {
+	private UserInfo userObj = new UserInfo();
 	
-	private String user = "";
-	private String pass = "";
-	
-	// sign-in method to look up user name and password to make sure they match.
-	public void signIn(String user, char[] pass){
-		this.user = user;
-		this.pass = new String(pass);
+	public void setNewUser(UserInfo userObj){
+		this.userObj = userObj;
+		newUserCheck();
 	}
- // create user method to open and write to a text file.
 	
+	public void newUserCheck(){
+		File userFile = new File(userObj.getUser());
+		
+		if(userFile.exists()){
+			JOptionPane.showMessageDialog(null, userFile.getName() + " Exists");
+		}else{
+			JOptionPane.showMessageDialog(null, userFile.getName() + " needs to be created");
+		}
+		
+	}
 	
 }

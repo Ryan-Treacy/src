@@ -10,19 +10,26 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+
 import javax.swing.JPasswordField;
 
 
 public class UserInfoGUI extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JPasswordField passwordField;
+	private UserInfo userObj = new UserInfo();
 
 	/**
 	 * Launch the application.
 	 */
-	public static void buildLogin(){
+	public void buildLogin(){
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -97,7 +104,6 @@ public class UserInfoGUI extends JFrame {
 	}
 	
 	public void validUserPass(){
-		UserInfo userObj = new UserInfo();
 		userObj.setUser(textField.getText());
 		userObj.setPassword(passwordField.getText());
 		if((userObj.getUser().isEmpty()) || (userObj.getPassword().isEmpty())){
@@ -109,12 +115,8 @@ public class UserInfoGUI extends JFrame {
 				textField.requestFocus();
 			}
 		}else{
-			newUserCheck();
+			FileIO newUser = new FileIO();
+			newUser.setNewUser(userObj);
 		}
-	}
-	
-	public void newUserCheck(){
-		// file input output stuff here
-		JOptionPane.showMessageDialog(null, "Made it to newUserCheck");
 	}
 }
