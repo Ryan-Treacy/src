@@ -1,12 +1,12 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Formatter;
 
 import javax.swing.JOptionPane;
 
 
 public class FileIO {
-	Formatter file;
 	private UserInfo userObj = new UserInfo();
 	
 	public void setNewUser(UserInfo userObj){
@@ -14,8 +14,14 @@ public class FileIO {
 		newUserCheck();
 	}
 	
-	public void addPassword(){
-		file.format("$$$PASSWORD$$$%s", userObj.getPassword());////////////////why is this not working////////////////////////////////////////
+	public void addPassword(File userFile){
+		try {
+			PrintWriter output = new PrintWriter(userFile);
+			output.println(userObj.getPassword());
+			output.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} 
 	}
 	
 	public void newUserCheck(){
@@ -31,13 +37,8 @@ public class FileIO {
 				userObj.setPassword(temppass);
 				temppass = JOptionPane.showInputDialog(null, "Password doesn't match, please re-enter.");
 			}
-			try{
-				file= new Formatter(userFile.getName());
-			}catch(FileNotFoundException e){
-				e.printStackTrace();
-			}
-			JOptionPane.showMessageDialog(null, userFile.getName() + " was created");
-			addPassword();
+			JOptionPane.showMessageDialog(null, "User " + userObj.getUser() + " was created");
+			addPassword(userFile);
 		}
 	}
 }
