@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 
 public class FileIO {
-	Formatter formatter;
+	Formatter file;
 	private UserInfo userObj = new UserInfo();
 	
 	public void setNewUser(UserInfo userObj){
@@ -14,33 +14,30 @@ public class FileIO {
 		newUserCheck();
 	}
 	
+	public void addPassword(){
+		file.format("$$$PASSWORD$$$%s", userObj.getPassword());////////////////why is this not working////////////////////////////////////////
+	}
+	
 	public void newUserCheck(){
-		File userFile = new File(userObj.getUser() + ".txt");
+		File userFile = new File(userObj.getUser() + ".java");
 		
 		if(userFile.exists()){
 			JOptionPane.showMessageDialog(null, userFile.getName() + " Exists");
 		}else{
 			JOptionPane.showMessageDialog(null, userObj.getUser() + " is not a known username.");
-			String tempUser = JOptionPane.showInputDialog(null, "Please re-enter Username");
-			while(!userObj.getUser().equals(tempUser)){
-				userObj.setPassword(tempUser);
-				tempUser = JOptionPane.showInputDialog(null, "Username doesn't match please re-enter.");
-			}
 			JOptionPane.showMessageDialog(null, "Creating User: " + userObj.getUser());
 			String temppass = JOptionPane.showInputDialog(null, "Please re-enter password");
-			if(temppass.equals(userObj.getPassword())){
-				try{
-					formatter = new Formatter(userFile.getName());
-				}catch(FileNotFoundException e){
-					e.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(null, userFile.getName() + " was created");
-			}else{
-				while(!userObj.getPassword().equals(temppass)){
-					userObj.setPassword(temppass);
-					temppass = JOptionPane.showInputDialog(null, "Password doesn't match, please re-enter.");
-				}
+			while(!userObj.getPassword().equals(temppass)){
+				userObj.setPassword(temppass);
+				temppass = JOptionPane.showInputDialog(null, "Password doesn't match, please re-enter.");
 			}
+			try{
+				file= new Formatter(userFile.getName());
+			}catch(FileNotFoundException e){
+				e.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(null, userFile.getName() + " was created");
+			addPassword();
 		}
 	}
 }
