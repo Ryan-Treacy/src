@@ -12,7 +12,7 @@ public class FileIO {
 	}
 	
 	public void newUserCheck(){
-		File userFile = new File(userObj.getUser());
+		File userFile = new File(userObj.getUser() + ".txt");
 		
 		if(userFile.exists()){
 			JOptionPane.showMessageDialog(null, userFile.getName() + " Exists");
