@@ -20,14 +20,22 @@ public class FileIO {
 		if(userFile.exists()){
 			JOptionPane.showMessageDialog(null, userFile.getName() + " Exists");
 		}else{
-			try{
-				formatter = new Formatter(userFile.getName());
-			}catch(FileNotFoundException e){
-				e.printStackTrace();
+			JOptionPane.showMessageDialog(null, userObj.getUser() + " is not a known user.");
+			JOptionPane.showMessageDialog(null, "Creating User: " + userObj.getUser());
+			String temppass = JOptionPane.showInputDialog(null, "Please re-enter password");
+			if(temppass.equals(userObj.getPassword())){
+				try{
+					formatter = new Formatter(userFile.getName());
+				}catch(FileNotFoundException e){
+					e.printStackTrace();
+				}
+				JOptionPane.showMessageDialog(null, userFile.getName() + " was created");
+			}else{
+				while(!userObj.getPassword().equals(temppass)){
+					userObj.setPassword(temppass);
+					temppass = JOptionPane.showInputDialog(null, "Password don't match, please re-enter password");
+				}
 			}
-			JOptionPane.showMessageDialog(null, userFile.getName() + " was created");
 		}
-		
 	}
-	
 }
