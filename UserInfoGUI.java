@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+
 import javax.swing.JPasswordField;
 
 
@@ -114,6 +116,7 @@ public class UserInfoGUI extends JFrame {
 		}else{
 			FileIO newUser = new FileIO();
 			newUser.setNewUser(userObj);
+			newUser.newUserCheck();
 		}
 	}
 }

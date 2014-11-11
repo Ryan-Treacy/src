@@ -2,19 +2,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Formatter;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
 
 public class FileIO {
 	private UserInfo userObj = new UserInfo();
+	private File userFile; 
 	
 	public void setNewUser(UserInfo userObj){
 		this.userObj = userObj;
-		newUserCheck();
 	}
 	
-	public void addPassword(File userFile){
+	public void addPassword(){
 		try {
 			PrintWriter output = new PrintWriter(userFile);
 			output.println(userObj.getPassword());
@@ -24,11 +25,30 @@ public class FileIO {
 		} 
 	}
 	
+	public boolean checkPassword(){
+		boolean temp = false;
+		try {
+			Scanner input = new Scanner(userFile);
+			if(input.nextLine().equals(userObj.getPassword())){
+				input.close();
+				temp = true;
+			}else{
+				JOptionPane.showMessageDialog(null, "Password doesn't match.");
+				input.close();
+				temp = false;
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return temp;
+	}
+	
 	public void newUserCheck(){
-		File userFile = new File(userObj.getUser() + ".java");
-		
+		userFile = new File(userObj.getUser() + ".java");
 		if(userFile.exists()){
-			JOptionPane.showMessageDialog(null, userFile.getName() + " Exists");
+			if(checkPassword()){
+				JOptionPane.showMessageDialog(null, "Welcome " + userFile.getName() + "!");
+			}
 		}else{
 			JOptionPane.showMessageDialog(null, userObj.getUser() + " is not a known username.");
 			JOptionPane.showMessageDialog(null, "Creating User: " + userObj.getUser());
@@ -38,7 +58,8 @@ public class FileIO {
 				temppass = JOptionPane.showInputDialog(null, "Password doesn't match, please re-enter.");
 			}
 			JOptionPane.showMessageDialog(null, "User " + userObj.getUser() + " was created");
-			addPassword(userFile);
+			addPassword();
+			JOptionPane.showMessageDialog(null, "Welcome " + userFile.getName() + "!");
 		}
 	}
 }
