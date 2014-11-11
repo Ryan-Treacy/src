@@ -20,7 +20,12 @@ public class FileIO {
 		if(userFile.exists()){
 			JOptionPane.showMessageDialog(null, userFile.getName() + " Exists");
 		}else{
-			JOptionPane.showMessageDialog(null, userObj.getUser() + " is not a known user.");
+			JOptionPane.showMessageDialog(null, userObj.getUser() + " is not a known username.");
+			String tempUser = JOptionPane.showInputDialog(null, "Please re-enter Username");
+			while(!userObj.getUser().equals(tempUser)){
+				userObj.setPassword(tempUser);
+				tempUser = JOptionPane.showInputDialog(null, "Username doesn't match please re-enter.");
+			}
 			JOptionPane.showMessageDialog(null, "Creating User: " + userObj.getUser());
 			String temppass = JOptionPane.showInputDialog(null, "Please re-enter password");
 			if(temppass.equals(userObj.getPassword())){
@@ -33,7 +38,7 @@ public class FileIO {
 			}else{
 				while(!userObj.getPassword().equals(temppass)){
 					userObj.setPassword(temppass);
-					temppass = JOptionPane.showInputDialog(null, "Password don't match, please re-enter password");
+					temppass = JOptionPane.showInputDialog(null, "Password doesn't match, please re-enter.");
 				}
 			}
 		}
