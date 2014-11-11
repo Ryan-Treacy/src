@@ -46,8 +46,8 @@ public class UserInfoGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblUserName = new JLabel("User:");
-		lblUserName.setBounds(60, 82, 99, 15);
+		JLabel lblUserName = new JLabel("Username:");
+		lblUserName.setBounds(28, 82, 99, 15);
 		contentPane.add(lblUserName);
 		
 		JLabel lblNewLabel = new JLabel("Password:");
@@ -55,11 +55,21 @@ public class UserInfoGUI extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		textField = new JTextField();
+		textField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				if(passwordField.getText().isEmpty()){
+					passwordField.requestFocus();
+				}else{
+					validUserPass();
+				}
+			}
+		});
 		textField.setBounds(129, 80, 255, 19);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JButton btnConnect = new JButton("Connect");
+		btnConnect.setToolTipText("Click to sign in/sign up");
 		btnConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				validUserPass();
@@ -69,8 +79,21 @@ public class UserInfoGUI extends JFrame {
 		contentPane.add(btnConnect);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(129, 121, 258, 19);
+		passwordField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				if(textField.getText().isEmpty()){
+					textField.requestFocus();
+				}else{
+					validUserPass();
+				}
+			}
+		});
+		passwordField.setBounds(126, 121, 258, 19);
 		contentPane.add(passwordField);
+		
+		JLabel lblEnterUsernameAnd = new JLabel("Enter Username and Password");
+		lblEnterUsernameAnd.setBounds(101, 26, 255, 19);
+		contentPane.add(lblEnterUsernameAnd);
 	}
 	
 	public void validUserPass(){
@@ -79,12 +102,19 @@ public class UserInfoGUI extends JFrame {
 		userObj.setPassword(passwordField.getText());
 		if((userObj.getUser().isEmpty()) || (userObj.getPassword().isEmpty())){
 			JOptionPane.showMessageDialog(null, "Invaild Username or Password");
+			if(userObj.getPassword().isEmpty()){
+				passwordField.requestFocus();
+			}
+			if(userObj.getUser().isEmpty()){
+				textField.requestFocus();
+			}
 		}else{
 			newUserCheck();
 		}
 	}
 	
 	public void newUserCheck(){
-		// file input output stuff here.
+		// file input output stuff here
+		JOptionPane.showMessageDialog(null, "Made it to newUserCheck");
 	}
 }
