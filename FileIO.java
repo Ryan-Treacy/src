@@ -1,15 +1,10 @@
-<<<<<<< HEAD
-package FileIO;
-
-public class FileIO {
-
-=======
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Formatter;
 
 import javax.swing.JOptionPane;
-//Chris!!!!!! i made a change
+
+
 public class FileIO {
 	Formatter file;
 	private UserInfo userObj = new UserInfo();
@@ -45,5 +40,4 @@ public class FileIO {
 			addPassword();
 		}
 	}
->>>>>>> 092b6d39ea82e4906b7698cd621bb08e90eb297f
 }
