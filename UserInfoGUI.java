@@ -162,7 +162,9 @@ public class UserInfoGUI {
 	}
 	
 	public void updateProfile(){
+		String temp;
 		if(!postitTF.getText().equals("")){
+			FileIO.updateFile(postitTF.getText());
 			profileTF.append(userObj.getUser() + ": " + postitTF.getText() + "\n");
 			profileTF.setCaretPosition(profileTF.getDocument().getLength());
 			postitTF.setText("");

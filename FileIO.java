@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Formatter;
 import java.util.Scanner;
@@ -9,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class FileIO {
 	private UserInfo userObj = new UserInfo();
-	private File userFile; 
+	private static File userFile; 
 	
 	public void setNewUser(UserInfo userObj){
 		this.userObj = userObj;
@@ -67,5 +69,15 @@ public class FileIO {
 			temp = true;
 		}
 		return temp;
+	}
+	
+	public static void updateFile(String str){
+		try {
+			FileWriter output = new FileWriter(userFile, true);
+			output.write(str + "\n");
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
