@@ -65,7 +65,7 @@ public class FileIO {
 			}
 			JOptionPane.showMessageDialog(null, "User " + userObj.getUser() + " was created");
 			addPassword();
-			JOptionPane.showMessageDialog(null, "Welcome " + userFile.getName() + "!");
+			JOptionPane.showMessageDialog(null, "Welcome " + userObj.getUser() + "!");
 			temp = true;
 		}
 		return temp;
