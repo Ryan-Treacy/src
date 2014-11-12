@@ -47,7 +47,7 @@ public class FileIO {
 		userFile = new File(userObj.getUser() + ".java");
 		if(userFile.exists()){
 			if(checkPassword()){
-				JOptionPane.showMessageDialog(null, "Welcome " + userFile.getName() + "!");
+				JOptionPane.showMessageDialog(null, "Welcome " + userObj.getUser() + "!");
 			}
 		}else{
 			JOptionPane.showMessageDialog(null, userObj.getUser() + " is not a known username.");

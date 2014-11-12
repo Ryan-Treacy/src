@@ -11,7 +11,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.JPanel;
 
 
 public class UserInfoGUI {
@@ -22,7 +21,11 @@ public class UserInfoGUI {
 	private UserInfo userObj = new UserInfo();
 	private JTextArea postitTF;
 	private JTextArea profileTF;
-
+	private JButton connectBTN;
+	private JButton postitBTN;
+	private JButton disconnectBTN;
+	private JLabel passwordLBL;
+	private JLabel userLBL;
 	/**
 	 * Launch the application.
 	 */
@@ -84,15 +87,15 @@ public class UserInfoGUI {
 		passwordTF.setBounds(512, 32, 114, 19);
 		frmUmwCompsciPost.getContentPane().add(passwordTF);
 		
-		JLabel userLBL = new JLabel("User Name:");
+		userLBL = new JLabel("User Name:");
 		userLBL.setBounds(405, 14, 113, 15);
 		frmUmwCompsciPost.getContentPane().add(userLBL);
 		
-		JLabel passwordLBL = new JLabel("Password:");
+		passwordLBL = new JLabel("Password:");
 		passwordLBL.setBounds(405, 34, 101, 15);
 		frmUmwCompsciPost.getContentPane().add(passwordLBL);
 		
-		JButton connectBTN = new JButton("Connect");
+		connectBTN = new JButton("Connect");
 		connectBTN.setToolTipText("Click to sign in/sign up");
 		connectBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -102,12 +105,26 @@ public class UserInfoGUI {
 		connectBTN.setBounds(405, 63, 117, 25);
 		frmUmwCompsciPost.getContentPane().add(connectBTN);
 		
-		JButton btnDisconnect = new JButton("Disconnect");
-		btnDisconnect.setEnabled(false);
-		btnDisconnect.setBounds(522, 63, 117, 25);
-		frmUmwCompsciPost.getContentPane().add(btnDisconnect);
+		disconnectBTN = new JButton("Disconnect");
+		disconnectBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				passwordTF.setText("");
+				userTF.setText("");
+				connectBTN.setEnabled(true);
+				disconnectBTN.setEnabled(false);
+				postitTF.setEnabled(false);
+				postitBTN.setEnabled(false);
+				passwordTF.setVisible(true);
+				passwordLBL.setVisible(true);
+				userLBL.setText("User Name:");
+			}
+		});
+		disconnectBTN.setEnabled(false);
+		disconnectBTN.setBounds(522, 63, 117, 25);
+		frmUmwCompsciPost.getContentPane().add(disconnectBTN);
 		
 		postitTF = new JTextArea();
+		postitTF.setEditable(false);
 		postitTF.setToolTipText("type here to stick a POST IT!");
 		postitTF.setBounds(36, 30, 227, 58);
 		postitTF.setWrapStyleWord(true);
@@ -115,7 +132,8 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().add(postitTF);
 		postitTF.setColumns(10);
 		
-		JButton postitBTN = new JButton("POST IT!");
+		postitBTN = new JButton("POST IT!");
+		postitBTN.setEnabled(false);
 		postitBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -157,6 +175,13 @@ public class UserInfoGUI {
 			FileIO newUser = new FileIO();
 			newUser.setNewUser(userObj);
 			newUser.newUserCheck();
+			connectBTN.setEnabled(false);
+			disconnectBTN.setEnabled(true);
+			postitTF.setEnabled(true);
+			postitBTN.setEnabled(true);
+			passwordTF.setVisible(false);
+			passwordLBL.setVisible(false);
+			userLBL.setText("Signed is as:");
 		}
 	}
 }
