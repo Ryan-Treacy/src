@@ -11,6 +11,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 public class UserInfoGUI {
@@ -162,7 +164,6 @@ public class UserInfoGUI {
 	}
 	
 	public void updateProfile(){
-		String temp;
 		if(!postitTF.getText().equals("")){
 			FileIO.updateFile(postitTF.getText());
 			profileTF.append(userObj.getUser() + ": " + postitTF.getText() + "\n");
