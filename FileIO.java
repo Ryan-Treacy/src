@@ -43,11 +43,15 @@ public class FileIO {
 		return temp;
 	}
 	
-	public void newUserCheck(){
+	public boolean newUserCheck(){
+		boolean temp;
 		userFile = new File(userObj.getUser() + ".java");
 		if(userFile.exists()){
 			if(checkPassword()){
 				JOptionPane.showMessageDialog(null, "Welcome " + userObj.getUser() + "!");
+				temp = true;
+			}else{
+				temp = false;
 			}
 		}else{
 			JOptionPane.showMessageDialog(null, userObj.getUser() + " is not a known username.");
@@ -60,6 +64,8 @@ public class FileIO {
 			JOptionPane.showMessageDialog(null, "User " + userObj.getUser() + " was created");
 			addPassword();
 			JOptionPane.showMessageDialog(null, "Welcome " + userFile.getName() + "!");
+			temp = true;
 		}
+		return temp;
 	}
 }

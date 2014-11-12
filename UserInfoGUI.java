@@ -100,6 +100,7 @@ public class UserInfoGUI {
 		connectBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				validUserPass();
+				postitTF.requestFocus();
 			}
 		});
 		connectBTN.setBounds(405, 63, 117, 25);
@@ -112,7 +113,7 @@ public class UserInfoGUI {
 				userTF.setText("");
 				connectBTN.setEnabled(true);
 				disconnectBTN.setEnabled(false);
-				postitTF.setEnabled(false);
+				postitTF.setEditable(false);
 				postitBTN.setEnabled(false);
 				passwordTF.setVisible(true);
 				passwordLBL.setVisible(true);
@@ -124,11 +125,11 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().add(disconnectBTN);
 		
 		postitTF = new JTextArea();
+		postitTF.setLineWrap(true);
+		postitTF.setWrapStyleWord(true);
 		postitTF.setEditable(false);
 		postitTF.setToolTipText("type here to stick a POST IT!");
 		postitTF.setBounds(36, 30, 227, 58);
-		postitTF.setWrapStyleWord(true);
-		postitTF.setLineWrap(true);
 		frmUmwCompsciPost.getContentPane().add(postitTF);
 		postitTF.setColumns(10);
 		
@@ -136,6 +137,7 @@ public class UserInfoGUI {
 		postitBTN.setEnabled(false);
 		postitBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				updateProfile();
 			}
 		});
 		postitBTN.setToolTipText("Click to POST IT!");
@@ -149,15 +151,25 @@ public class UserInfoGUI {
 		JScrollPane profileSP = new JScrollPane();
 		profileSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		profileSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		profileSP.setViewportView(profileTF);
 		profileSP.setBounds(36, 97, 603, 392);
 		frmUmwCompsciPost.getContentPane().add(profileSP);
 		
 		profileTF = new JTextArea();
-		profileTF.setColumns(10);
 		profileTF.setEditable(false);
+		profileSP.setViewportView(profileTF);
 		profileTF.setWrapStyleWord(true);
 		profileTF.setLineWrap(true);
+	}
+	
+	public void updateProfile(){
+		if(!postitTF.getText().equals("")){
+			profileTF.append(userObj.getUser() + ": " + postitTF.getText() + "\n");
+			profileTF.setCaretPosition(profileTF.getDocument().getLength());
+			postitTF.setText("");
+			postitTF.requestFocus();
+		}else{
+			postitTF.requestFocus();
+		}
 	}
 	
 	public void validUserPass(){
@@ -174,14 +186,16 @@ public class UserInfoGUI {
 		}else{
 			FileIO newUser = new FileIO();
 			newUser.setNewUser(userObj);
-			newUser.newUserCheck();
-			connectBTN.setEnabled(false);
-			disconnectBTN.setEnabled(true);
-			postitTF.setEnabled(true);
-			postitBTN.setEnabled(true);
-			passwordTF.setVisible(false);
-			passwordLBL.setVisible(false);
-			userLBL.setText("Signed is as:");
+			if(newUser.newUserCheck()){
+				connectBTN.setEnabled(false);
+				disconnectBTN.setEnabled(true);
+				postitTF.setEditable(true);
+				postitBTN.setEnabled(true);
+				passwordTF.setVisible(false);
+				passwordLBL.setVisible(false);
+				userLBL.setText("Signed is as:");
+				postitTF.requestFocus();
+			}
 		}
 	}
 }
