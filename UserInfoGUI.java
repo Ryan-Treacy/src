@@ -1,39 +1,37 @@
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.io.File;
-
 import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JPanel;
 
 
-public class UserInfoGUI extends JFrame {
+public class UserInfoGUI {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JFrame frmUmwCompsciPost;
+	private JTextField userTF;
+	private JPasswordField passwordTF;
 	private UserInfo userObj = new UserInfo();
+	private JTextArea postitTF;
+	private JTextArea profileTF;
 
 	/**
 	 * Launch the application.
 	 */
-	public void buildLogin(){
+	public void buildLogin() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserInfoGUI frame = new UserInfoGUI();
-					frame.setVisible(true);
+					UserInfoGUI window = new UserInfoGUI();
+					window.frmUmwCompsciPost.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -42,76 +40,118 @@ public class UserInfoGUI extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the application.
 	 */
 	public UserInfoGUI() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmUmwCompsciPost = new JFrame();
+		frmUmwCompsciPost.setTitle("UMW CompSci POST IT!");
+		frmUmwCompsciPost.setResizable(false);
+		frmUmwCompsciPost.setBounds(100, 100, 677, 529);
+		frmUmwCompsciPost.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmUmwCompsciPost.getContentPane().setLayout(null);
 		
-		JLabel lblUserName = new JLabel("Username:");
-		lblUserName.setBounds(28, 82, 99, 15);
-		contentPane.add(lblUserName);
-		
-		JLabel lblNewLabel = new JLabel("Password:");
-		lblNewLabel.setBounds(28, 123, 99, 15);
-		contentPane.add(lblNewLabel);
-		
-		textField = new JTextField();
-		textField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				if(passwordField.getText().isEmpty()){
-					passwordField.requestFocus();
+		userTF = new JTextField();
+		userTF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(passwordTF.getText().isEmpty()){
+					passwordTF.requestFocus();
 				}else{
 					validUserPass();
 				}
 			}
 		});
-		textField.setBounds(129, 80, 255, 19);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		userTF.setBounds(512, 12, 114, 19);
+		frmUmwCompsciPost.getContentPane().add(userTF);
+		userTF.setColumns(10);
 		
-		JButton btnConnect = new JButton("Connect");
-		btnConnect.setToolTipText("Click to sign in/sign up");
-		btnConnect.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
+		passwordTF = new JPasswordField();
+		passwordTF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(userTF.getText().isEmpty()){
+					userTF.requestFocus();
+				}else{
+					validUserPass();
+				}
+			}
+		});
+		passwordTF.setBounds(512, 32, 114, 19);
+		frmUmwCompsciPost.getContentPane().add(passwordTF);
+		
+		JLabel userLBL = new JLabel("User Name:");
+		userLBL.setBounds(405, 14, 113, 15);
+		frmUmwCompsciPost.getContentPane().add(userLBL);
+		
+		JLabel passwordLBL = new JLabel("Password:");
+		passwordLBL.setBounds(405, 34, 101, 15);
+		frmUmwCompsciPost.getContentPane().add(passwordLBL);
+		
+		JButton connectBTN = new JButton("Connect");
+		connectBTN.setToolTipText("Click to sign in/sign up");
+		connectBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				validUserPass();
 			}
 		});
-		btnConnect.setBounds(165, 191, 117, 25);
-		contentPane.add(btnConnect);
+		connectBTN.setBounds(405, 63, 117, 25);
+		frmUmwCompsciPost.getContentPane().add(connectBTN);
 		
-		passwordField = new JPasswordField();
-		passwordField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				if(textField.getText().isEmpty()){
-					textField.requestFocus();
-				}else{
-					validUserPass();
-				}
+		JButton btnDisconnect = new JButton("Disconnect");
+		btnDisconnect.setEnabled(false);
+		btnDisconnect.setBounds(522, 63, 117, 25);
+		frmUmwCompsciPost.getContentPane().add(btnDisconnect);
+		
+		postitTF = new JTextArea();
+		postitTF.setToolTipText("type here to stick a POST IT!");
+		postitTF.setBounds(36, 30, 227, 58);
+		postitTF.setWrapStyleWord(true);
+		postitTF.setLineWrap(true);
+		frmUmwCompsciPost.getContentPane().add(postitTF);
+		postitTF.setColumns(10);
+		
+		JButton postitBTN = new JButton("POST IT!");
+		postitBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		passwordField.setBounds(126, 121, 258, 19);
-		contentPane.add(passwordField);
+		postitBTN.setToolTipText("Click to POST IT!");
+		postitBTN.setBounds(275, 12, 117, 76);
+		frmUmwCompsciPost.getContentPane().add(postitBTN);
 		
-		JLabel lblEnterUsernameAnd = new JLabel("Enter Username and Password");
-		lblEnterUsernameAnd.setBounds(101, 26, 255, 19);
-		contentPane.add(lblEnterUsernameAnd);
+		JLabel lblEnterTextBelow = new JLabel("Enter Text below, then POST IT!");
+		lblEnterTextBelow.setBounds(36, 14, 227, 15);
+		frmUmwCompsciPost.getContentPane().add(lblEnterTextBelow);
+		
+		JScrollPane profileSP = new JScrollPane();
+		profileSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		profileSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		profileSP.setViewportView(profileTF);
+		profileSP.setBounds(36, 97, 603, 392);
+		frmUmwCompsciPost.getContentPane().add(profileSP);
+		
+		profileTF = new JTextArea();
+		profileTF.setColumns(10);
+		profileTF.setEditable(false);
+		profileTF.setWrapStyleWord(true);
+		profileTF.setLineWrap(true);
 	}
 	
 	public void validUserPass(){
-		userObj.setUser(textField.getText());
-		userObj.setPassword(passwordField.getText());
+		userObj.setUser(userTF.getText());
+		userObj.setPassword(passwordTF.getText());
 		if((userObj.getUser().isEmpty()) || (userObj.getPassword().isEmpty())){
 			JOptionPane.showMessageDialog(null, "Invaild Username or Password");
 			if(userObj.getPassword().isEmpty()){
-				passwordField.requestFocus();
+				passwordTF.requestFocus();
 			}
 			if(userObj.getUser().isEmpty()){
-				textField.requestFocus();
+				userTF.requestFocus();
 			}
 		}else{
 			FileIO newUser = new FileIO();
