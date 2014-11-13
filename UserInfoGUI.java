@@ -11,8 +11,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -41,9 +39,7 @@ public class UserInfoGUI {
 			public void run() {
 				try {
 					UserInfoGUI window = new UserInfoGUI();
-					JOptionPane.showMessageDialog(null, "Logged in as: GUEST\n\nTo Sign in/Sign up, please enter your existing/desired Username and Password.");
 					window.frmUmwCompsciPost.setVisible(true);
-					FileIO.loadGuestFile();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,6 +52,7 @@ public class UserInfoGUI {
 	 */
 	public UserInfoGUI() {
 		initialize();
+		guestSignon();
 	}
 
 	/**
@@ -123,19 +120,7 @@ public class UserInfoGUI {
 		disconnectBTN.setToolTipText("Disconnect from UMW  CompSci POST IT!");
 		disconnectBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				passwordTF.setText("");
-				userTF.setText("");
-				connectBTN.setEnabled(true);
-				disconnectBTN.setEnabled(false);
-				passwordTF.setVisible(true);
-				passwordLBL.setVisible(true);
-				profileTF.setText("");
-				userObj.setPassword("password");
-				userObj.setUser("");
-				postitTF.setEditable(false);
-				postitBTN.setEnabled(false);
-				lblEnterTextBelow.setText("Currently logged in as:  " + userObj.getUser());
-				userLBL.setText("User Name:");
+				System.exit(0);
 			}
 		});
 		disconnectBTN.setEnabled(false);
@@ -149,7 +134,6 @@ public class UserInfoGUI {
 			}
 		});
 		postitTF.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		postitTF.setEditable(false);
 		postitTF.setToolTipText("type here to stick a POST IT!");
 		postitTF.setBounds(36, 28, 356, 25);
 		postitTF.setDocument(new JTextFieldCharLimit(charLimit));
@@ -157,7 +141,6 @@ public class UserInfoGUI {
 		postitTF.setColumns(10);
 		
 		postitBTN = new JButton("POST IT!");
-		postitBTN.setEnabled(false);
 		postitBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				updateProfile();
@@ -189,6 +172,9 @@ public class UserInfoGUI {
 	public void updateProfile(){
 		if(!postitTF.getText().equals("")){
 			FileIO.updateFile(userObj.getUser() + ": " + postitTF.getText() + "\n", FileIO.getFile());
+			if(!userObj.getUser().contentEquals("GUEST")){
+				FileIO.updateFile(userObj.getUser() + ": " + postitTF.getText() + "\n", FileIO.getGuestFile());
+			}
 			profileTF.append(userObj.getUser() + ": " + postitTF.getText() + "\n");
 			profileTF.setCaretPosition(profileTF.getDocument().getLength());
 			postitTF.setText("");
@@ -212,6 +198,16 @@ public class UserInfoGUI {
 		}
 	}
 	
+	public void guestSignon(){
+		FileIO newUser = new FileIO();
+		newUser.setNewUser(userObj);
+		if(newUser.newUserCheck()){
+			connectBTN.setEnabled(false);
+			disconnectBTN.setEnabled(true);
+			loadProfile();
+			postitTF.requestFocus();
+		}
+	}
 	public void validUserPass(){
 		userObj.setUser(userTF.getText());
 		userObj.setPassword(passwordTF.getText());
@@ -235,6 +231,7 @@ public class UserInfoGUI {
 				passwordLBL.setVisible(false);
 				userLBL.setText("Signed is as:");
 				loadProfile();
+				lblEnterTextBelow.setText("Currently logged in as:  " + userObj.getUser());
 				postitTF.requestFocus();
 			}
 		}

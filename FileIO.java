@@ -12,23 +12,11 @@ import javax.swing.JOptionPane;
 public class FileIO {
 	private static UserInfo userObj = new UserInfo();
 	private static File userFile; 
-	private static File guestFile;
+	private static File guestFile = new File("GUEST.java");
 	
-	public static void loadGuestFile(){
-		guestFile = new File("GUEST.java");
-		if(!guestFile.exists()){
-			try {
-				PrintWriter output = new PrintWriter(guestFile);
-				output.println(userObj.getPassword());
-				output.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} 
-		}
-	}
 	
 	public void setNewUser(UserInfo userObj){
-		this.userObj = userObj;
+		FileIO.userObj = userObj;
 	}
 	
 	public void addPassword(){
@@ -64,7 +52,6 @@ public class FileIO {
 		setFile(new File(userObj.getUser() + ".java"));
 		if(getFile().exists()){
 			if(checkPassword()){
-				JOptionPane.showMessageDialog(null, "Welcome " + userObj.getUser() + "!");
 				temp = true;
 			}else{
 				temp = false;
@@ -79,7 +66,6 @@ public class FileIO {
 			}
 			JOptionPane.showMessageDialog(null, "User " + userObj.getUser() + " was created");
 			addPassword();
-			JOptionPane.showMessageDialog(null, "Welcome " + userObj.getUser() + "!");
 			temp = true;
 		}
 		return temp;
@@ -101,5 +87,13 @@ public class FileIO {
 
 	public static void setFile(File userFile) {
 		FileIO.userFile = userFile;
+	}
+
+	public static File getGuestFile() {
+		return guestFile;
+	}
+
+	public static void setGuestFile(File guestFile) {
+		FileIO.guestFile = guestFile;
 	}
 }
