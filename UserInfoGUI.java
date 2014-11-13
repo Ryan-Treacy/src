@@ -19,7 +19,8 @@ import java.util.Scanner;
 
 
 public class UserInfoGUI {
-
+	
+	private int charLimit = 140;
 	private JFrame frmUmwCompsciPost;
 	private JTextField userTF;
 	private JPasswordField passwordTF;
@@ -66,6 +67,7 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().setLayout(null);
 		
 		userTF = new JTextField();
+		userTF.setToolTipText("Enter exisiting or desired username");
 		userTF.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		userTF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -81,6 +83,7 @@ public class UserInfoGUI {
 		userTF.setColumns(10);
 		
 		passwordTF = new JPasswordField();
+		passwordTF.setToolTipText("Enter existing or desired password");
 		passwordTF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(userTF.getText().isEmpty()){
@@ -113,6 +116,7 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().add(connectBTN);
 		
 		disconnectBTN = new JButton("Disconnect");
+		disconnectBTN.setToolTipText("Disconnect from UMW  CompSci POST IT!");
 		disconnectBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				passwordTF.setText("");
@@ -123,6 +127,7 @@ public class UserInfoGUI {
 				postitBTN.setEnabled(false);
 				passwordTF.setVisible(true);
 				passwordLBL.setVisible(true);
+				profileTF.setText("");
 				userLBL.setText("User Name:");
 			}
 		});
@@ -140,6 +145,7 @@ public class UserInfoGUI {
 		postitTF.setEditable(false);
 		postitTF.setToolTipText("type here to stick a POST IT!");
 		postitTF.setBounds(36, 28, 356, 25);
+		postitTF.setDocument(new JTextFieldCharLimit(charLimit));
 		frmUmwCompsciPost.getContentPane().add(postitTF);
 		postitTF.setColumns(10);
 		
