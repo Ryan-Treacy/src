@@ -14,6 +14,8 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 
 public class UserInfoGUI {
@@ -173,13 +175,27 @@ public class UserInfoGUI {
 	
 	public void updateProfile(){
 		if(!postitTF.getText().equals("")){
-			FileIO.updateFile(postitTF.getText());
+			FileIO.updateFile(userObj.getUser() + ": " + postitTF.getText() + "\n");
 			profileTF.append(userObj.getUser() + ": " + postitTF.getText() + "\n");
 			profileTF.setCaretPosition(profileTF.getDocument().getLength());
 			postitTF.setText("");
 			postitTF.requestFocus();
 		}else{
 			postitTF.requestFocus();
+		}
+	}
+	
+	public void loadProfile(){
+		try {
+			Scanner input = new Scanner(FileIO.getFile());
+			input.nextLine();
+			while(input.hasNextLine()){
+				profileTF.append(input.nextLine() + "\n");
+				profileTF.setCaretPosition(profileTF.getDocument().getLength());
+			}
+			input.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -205,6 +221,7 @@ public class UserInfoGUI {
 				passwordTF.setVisible(false);
 				passwordLBL.setVisible(false);
 				userLBL.setText("Signed is as:");
+				loadProfile();
 				postitTF.requestFocus();
 			}
 		}

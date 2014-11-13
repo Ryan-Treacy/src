@@ -19,7 +19,7 @@ public class FileIO {
 	
 	public void addPassword(){
 		try {
-			PrintWriter output = new PrintWriter(userFile);
+			PrintWriter output = new PrintWriter(getFile());
 			output.println(userObj.getPassword());
 			output.close();
 		} catch (FileNotFoundException e) {
@@ -30,7 +30,7 @@ public class FileIO {
 	public boolean checkPassword(){
 		boolean temp = false;
 		try {
-			Scanner input = new Scanner(userFile);
+			Scanner input = new Scanner(getFile());
 			if(input.nextLine().equals(userObj.getPassword())){
 				input.close();
 				temp = true;
@@ -47,8 +47,8 @@ public class FileIO {
 	
 	public boolean newUserCheck(){
 		boolean temp;
-		userFile = new File(userObj.getUser() + ".java");
-		if(userFile.exists()){
+		setFile(new File(userObj.getUser() + ".java"));
+		if(getFile().exists()){
 			if(checkPassword()){
 				JOptionPane.showMessageDialog(null, "Welcome " + userObj.getUser() + "!");
 				temp = true;
@@ -73,11 +73,19 @@ public class FileIO {
 	
 	public static void updateFile(String str){
 		try {
-			FileWriter output = new FileWriter(userFile, true);
-			output.write(str + "\n");
+			FileWriter output = new FileWriter(getFile(), true);
+			output.write(str);
 			output.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static File getFile() {
+		return userFile;
+	}
+
+	public static void setFile(File userFile) {
+		FileIO.userFile = userFile;
 	}
 }
