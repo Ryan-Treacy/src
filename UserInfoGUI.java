@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Font;
 
 
 public class UserInfoGUI {
@@ -21,7 +22,7 @@ public class UserInfoGUI {
 	private JTextField userTF;
 	private JPasswordField passwordTF;
 	private UserInfo userObj = new UserInfo();
-	private JTextArea postitTF;
+	private JTextField postitTF;
 	private JTextArea profileTF;
 	private JButton connectBTN;
 	private JButton postitBTN;
@@ -63,6 +64,7 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().setLayout(null);
 		
 		userTF = new JTextField();
+		userTF.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		userTF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(passwordTF.getText().isEmpty()){
@@ -126,12 +128,16 @@ public class UserInfoGUI {
 		disconnectBTN.setBounds(522, 63, 117, 25);
 		frmUmwCompsciPost.getContentPane().add(disconnectBTN);
 		
-		postitTF = new JTextArea();
-		postitTF.setLineWrap(true);
-		postitTF.setWrapStyleWord(true);
+		postitTF = new JTextField();
+		postitTF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				updateProfile();
+			}
+		});
+		postitTF.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		postitTF.setEditable(false);
 		postitTF.setToolTipText("type here to stick a POST IT!");
-		postitTF.setBounds(36, 30, 227, 58);
+		postitTF.setBounds(36, 28, 356, 25);
 		frmUmwCompsciPost.getContentPane().add(postitTF);
 		postitTF.setColumns(10);
 		
@@ -143,10 +149,11 @@ public class UserInfoGUI {
 			}
 		});
 		postitBTN.setToolTipText("Click to POST IT!");
-		postitBTN.setBounds(275, 12, 117, 76);
+		postitBTN.setBounds(80, 63, 280, 25);
 		frmUmwCompsciPost.getContentPane().add(postitBTN);
 		
 		JLabel lblEnterTextBelow = new JLabel("Enter Text below, then POST IT!");
+		lblEnterTextBelow.setFont(new Font("Dialog", Font.BOLD, 10));
 		lblEnterTextBelow.setBounds(36, 14, 227, 15);
 		frmUmwCompsciPost.getContentPane().add(lblEnterTextBelow);
 		
@@ -157,6 +164,7 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().add(profileSP);
 		
 		profileTF = new JTextArea();
+		profileTF.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		profileTF.setEditable(false);
 		profileSP.setViewportView(profileTF);
 		profileTF.setWrapStyleWord(true);
