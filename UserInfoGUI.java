@@ -41,8 +41,9 @@ public class UserInfoGUI {
 			public void run() {
 				try {
 					UserInfoGUI window = new UserInfoGUI();
-					JOptionPane.showMessageDialog(null, "To Sign in/Sign up, please enter your existing/desired Username and Password.\n\nTo log in as a guest use\nUsername: GUEST\nPassword: password");
+					JOptionPane.showMessageDialog(null, "Logged in as: GUEST\n\nTo Sign in/Sign up, please enter your existing/desired Username and Password.");
 					window.frmUmwCompsciPost.setVisible(true);
+					FileIO.loadGuestFile();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -187,7 +188,7 @@ public class UserInfoGUI {
 	
 	public void updateProfile(){
 		if(!postitTF.getText().equals("")){
-			FileIO.updateFile(userObj.getUser() + ": " + postitTF.getText() + "\n");
+			FileIO.updateFile(userObj.getUser() + ": " + postitTF.getText() + "\n", FileIO.getFile());
 			profileTF.append(userObj.getUser() + ": " + postitTF.getText() + "\n");
 			profileTF.setCaretPosition(profileTF.getDocument().getLength());
 			postitTF.setText("");

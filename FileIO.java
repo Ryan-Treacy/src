@@ -10,8 +10,22 @@ import javax.swing.JOptionPane;
 
 
 public class FileIO {
-	private UserInfo userObj = new UserInfo();
+	private static UserInfo userObj = new UserInfo();
 	private static File userFile; 
+	private static File guestFile;
+	
+	public static void loadGuestFile(){
+		guestFile = new File("GUEST.java");
+		if(!guestFile.exists()){
+			try {
+				PrintWriter output = new PrintWriter(guestFile);
+				output.println(userObj.getPassword());
+				output.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} 
+		}
+	}
 	
 	public void setNewUser(UserInfo userObj){
 		this.userObj = userObj;
@@ -71,9 +85,9 @@ public class FileIO {
 		return temp;
 	}
 	
-	public static void updateFile(String str){
+	public static void updateFile(String str, File file){
 		try {
-			FileWriter output = new FileWriter(getFile(), true);
+			FileWriter output = new FileWriter(file, true);
 			output.write(str);
 			output.close();
 		} catch (IOException e) {

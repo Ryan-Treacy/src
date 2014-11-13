@@ -1,7 +1,7 @@
 
 public class UserInfo {
-	private String user = "Not Connected";	
-	private String password;
+	private String user = "GUEST";	
+	private String password = "password";
 	public String getUser() {
 		return user;
 	}
