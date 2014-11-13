@@ -1,6 +1,6 @@
 
 public class UserInfo {
-	private String user = "UMW CompSci GUEST";	
+	private String user = "Not Connected";	
 	private String password;
 	public String getUser() {
 		return user;

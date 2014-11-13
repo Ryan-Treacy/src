@@ -32,6 +32,7 @@ public class UserInfoGUI {
 	private JButton disconnectBTN;
 	private JLabel passwordLBL;
 	private JLabel userLBL;
+	private JLabel lblEnterTextBelow;
 	/**
 	 * Launch the application.
 	 */
@@ -40,7 +41,7 @@ public class UserInfoGUI {
 			public void run() {
 				try {
 					UserInfoGUI window = new UserInfoGUI();
-					JOptionPane.showMessageDialog(null, "You are logged in as GUEST.  To Sign up/Sign in, please enter your existing or desired Username and Password.");
+					JOptionPane.showMessageDialog(null, "To Sign in/Sign up, please enter your existing/desired Username and Password.\n\nTo log in as a guest use\nUsername: GUEST\nPassword: password");
 					window.frmUmwCompsciPost.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -106,6 +107,7 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().add(passwordLBL);
 		
 		connectBTN = new JButton("Connect");
+		connectBTN.setActionCommand("Connect");
 		connectBTN.setToolTipText("Click to sign in/sign up");
 		connectBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -124,11 +126,14 @@ public class UserInfoGUI {
 				userTF.setText("");
 				connectBTN.setEnabled(true);
 				disconnectBTN.setEnabled(false);
-				postitTF.setEditable(false);
-				postitBTN.setEnabled(false);
 				passwordTF.setVisible(true);
 				passwordLBL.setVisible(true);
 				profileTF.setText("");
+				userObj.setPassword("password");
+				userObj.setUser("");
+				postitTF.setEditable(false);
+				postitBTN.setEnabled(false);
+				lblEnterTextBelow.setText("Currently logged in as:  " + userObj.getUser());
 				userLBL.setText("User Name:");
 			}
 		});
@@ -161,7 +166,7 @@ public class UserInfoGUI {
 		postitBTN.setBounds(80, 63, 280, 25);
 		frmUmwCompsciPost.getContentPane().add(postitBTN);
 		
-		JLabel lblEnterTextBelow = new JLabel("Currently logged in as:  " + userObj.getUser());
+		lblEnterTextBelow = new JLabel("Currently logged in as:  " + userObj.getUser());
 		lblEnterTextBelow.setFont(new Font("Dialog", Font.BOLD, 10));
 		lblEnterTextBelow.setBounds(36, 14, 350, 15);
 		frmUmwCompsciPost.getContentPane().add(lblEnterTextBelow);
