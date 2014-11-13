@@ -40,6 +40,7 @@ public class UserInfoGUI {
 			public void run() {
 				try {
 					UserInfoGUI window = new UserInfoGUI();
+					JOptionPane.showMessageDialog(null, "You are logged in as GUEST.  To Sign up/Sign in, please enter your existing or desired Username and Password.");
 					window.frmUmwCompsciPost.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -160,9 +161,9 @@ public class UserInfoGUI {
 		postitBTN.setBounds(80, 63, 280, 25);
 		frmUmwCompsciPost.getContentPane().add(postitBTN);
 		
-		JLabel lblEnterTextBelow = new JLabel("Enter Text below, then POST IT!");
+		JLabel lblEnterTextBelow = new JLabel("Currently logged in as:  " + userObj.getUser());
 		lblEnterTextBelow.setFont(new Font("Dialog", Font.BOLD, 10));
-		lblEnterTextBelow.setBounds(36, 14, 227, 15);
+		lblEnterTextBelow.setBounds(36, 14, 350, 15);
 		frmUmwCompsciPost.getContentPane().add(lblEnterTextBelow);
 		
 		JScrollPane profileSP = new JScrollPane();
