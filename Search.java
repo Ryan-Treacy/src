@@ -3,13 +3,14 @@ import java.util.regex.Pattern;
 
 
 public class Search {
-	// private String temp = "find @user and #topic test string.";
-
 	public static String searchForTagUser(String src){
 		String user="";
-		Matcher matcher = Pattern.compile("@(\\w+)").matcher(src);
+		Matcher matcher = Pattern.compile("@(\\S+)").matcher(src);
 		while (matcher.find()) {
-			user += matcher.group(1) + "\n";
+			String temp = matcher.group(1);
+			if(!temp.contains(".com")){
+				user += temp + "\n";
+			}
 		}
 		return user;
 	}
