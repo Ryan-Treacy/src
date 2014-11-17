@@ -31,6 +31,12 @@ public class UserInfoGUI {
 	private JLabel passwordLBL;
 	private JLabel userLBL;
 	private JLabel lblEnterTextBelow;
+	private JTextField topicTF;
+	private JTextArea userProfileTA;
+	private JButton topicBTN;
+	private JLabel userProfileLBL;
+	private JScrollPane profileSP;
+	private JScrollPane userProfileSP;
 	/**
 	 * Launch the application.
 	 */
@@ -83,6 +89,7 @@ public class UserInfoGUI {
 		userTF.setColumns(10);
 		
 		passwordTF = new JPasswordField();
+		passwordTF.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		passwordTF.setToolTipText("Enter existing or desired password");
 		passwordTF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -97,14 +104,17 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().add(passwordTF);
 		
 		userLBL = new JLabel("User Name:");
+		userLBL.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		userLBL.setBounds(405, 14, 113, 15);
 		frmUmwCompsciPost.getContentPane().add(userLBL);
 		
 		passwordLBL = new JLabel("Password:");
+		passwordLBL.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		passwordLBL.setBounds(405, 34, 101, 15);
 		frmUmwCompsciPost.getContentPane().add(passwordLBL);
 		
 		connectBTN = new JButton("Connect");
+		connectBTN.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		connectBTN.setActionCommand("Connect");
 		connectBTN.setToolTipText("Click to sign in/sign up");
 		connectBTN.addActionListener(new ActionListener() {
@@ -117,6 +127,7 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().add(connectBTN);
 		
 		disconnectBTN = new JButton("Disconnect");
+		disconnectBTN.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		disconnectBTN.setToolTipText("Disconnect from UMW  CompSci POST IT!");
 		disconnectBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -141,6 +152,7 @@ public class UserInfoGUI {
 		postitTF.setColumns(10);
 		
 		postitBTN = new JButton("POST IT!");
+		postitBTN.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		postitBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				updateProfile();
@@ -151,14 +163,14 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().add(postitBTN);
 		
 		lblEnterTextBelow = new JLabel("Currently logged in as:  " + userObj.getUser());
-		lblEnterTextBelow.setFont(new Font("Dialog", Font.BOLD, 10));
+		lblEnterTextBelow.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
 		lblEnterTextBelow.setBounds(36, 14, 350, 15);
 		frmUmwCompsciPost.getContentPane().add(lblEnterTextBelow);
 		
-		JScrollPane profileSP = new JScrollPane();
+		profileSP = new JScrollPane();
 		profileSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		profileSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		profileSP.setBounds(36, 97, 603, 392);
+		profileSP.setBounds(36, 97, 603, 243);
 		frmUmwCompsciPost.getContentPane().add(profileSP);
 		
 		profileTF = new JTextArea();
@@ -167,6 +179,42 @@ public class UserInfoGUI {
 		profileSP.setViewportView(profileTF);
 		profileTF.setWrapStyleWord(true);
 		profileTF.setLineWrap(true);
+		
+		userProfileLBL = new JLabel("");
+		userProfileLBL.setVisible(false);
+		userProfileLBL.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		userProfileLBL.setBounds(36, 344, 270, 25);
+		frmUmwCompsciPost.getContentPane().add(userProfileLBL);
+		
+		userProfileSP = new JScrollPane();
+		userProfileSP.setVisible(false);
+		userProfileSP.setBounds(36, 381, 603, 108);
+		frmUmwCompsciPost.getContentPane().add(userProfileSP);
+		
+		userProfileTA = new JTextArea();
+		userProfileTA.setVisible(false);
+		userProfileTA.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		userProfileTA.setWrapStyleWord(true);
+		userProfileSP.setViewportView(userProfileTA);
+		
+		topicTF = new JTextField();
+		topicTF.setVisible(false);
+		topicTF.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		topicTF.setText("example... #topic");
+		topicTF.setBounds(324, 345, 158, 25);
+		frmUmwCompsciPost.getContentPane().add(topicTF);
+		topicTF.setColumns(10);
+		
+		topicBTN = new JButton("Search");
+		topicBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//enter code to open #topics
+			}
+		});
+		topicBTN.setVisible(false);
+		topicBTN.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		topicBTN.setBounds(494, 345, 145, 25);
+		frmUmwCompsciPost.getContentPane().add(topicBTN);
 	}
 	
 	public void updateProfile(){
@@ -178,6 +226,8 @@ public class UserInfoGUI {
 			}
 			profileTF.append(userObj.getUser() + ": " + temp + "\n");
 			profileTF.setCaretPosition(profileTF.getDocument().getLength());
+			userProfileTA.append(userObj.getUser() + ": " + temp + "\n");
+			userProfileTA.setCaretPosition(0);
 			postitTF.setText("");
 			postitTF.requestFocus();
 			//search for user or topic tags 
@@ -187,7 +237,7 @@ public class UserInfoGUI {
 		}
 	}
 	
-	public void loadProfile(){
+	public void loadGuestProfile(){
 		try {
 			Scanner input = new Scanner(FileIO.getFile());
 			input.nextLine();
@@ -201,13 +251,27 @@ public class UserInfoGUI {
 		}
 	}
 	
+	public void loadUserProfile(){
+		try {
+			Scanner input = new Scanner(FileIO.getFile());
+			input.nextLine();
+			while(input.hasNextLine()){
+				userProfileTA.append(input.nextLine() + "\n");
+				userProfileTA.setCaretPosition(0);
+			}
+			input.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void guestSignon(){
 		FileIO newUser = new FileIO();
 		newUser.setNewUser(userObj);
 		if(newUser.newUserCheck()){
-			connectBTN.setEnabled(false);
-			disconnectBTN.setEnabled(true);
-			loadProfile();
+			connectBTN.setEnabled(true);
+			disconnectBTN.setEnabled(false);
+			loadGuestProfile();
 			postitTF.requestFocus();
 		}
 	}
@@ -233,9 +297,15 @@ public class UserInfoGUI {
 				passwordTF.setVisible(false);
 				passwordLBL.setVisible(false);
 				userLBL.setText("Signed is as:");
-				loadProfile();
+				loadUserProfile();
 				lblEnterTextBelow.setText("Currently logged in as:  " + userObj.getUser());
 				postitTF.requestFocus();
+				userProfileLBL.setText(userObj.getUser() + "'s Profile:");
+				userProfileLBL.setVisible(true);
+				userProfileSP.setVisible(true);
+				userProfileTA.setVisible(true);
+				topicTF.setVisible(true);
+				topicBTN.setVisible(true);
 			}
 		}
 	}
