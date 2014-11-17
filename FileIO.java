@@ -12,10 +12,22 @@ import javax.swing.JOptionPane;
 
 
 public class FileIO {
+	
 	private static UserInfo userObj = new UserInfo();
 	private static File userFile; 
 	private static File guestFile = new File("GUEST.java");
+	private static File tagFile;
 	
+	public static void tagWrite(String tag, String entry){
+		tagFile = new File(tag + ".java");
+		if(tag.contains("#")){
+			updateFile(entry + "\n", tagFile);
+		}else{
+			if(tagFile.exists()){
+				updateFile(entry + "\n", tagFile);
+			}
+		}
+	}	
 	
 	public void setNewUser(UserInfo userObj){
 		FileIO.userObj = userObj;

@@ -170,15 +170,18 @@ public class UserInfoGUI {
 	}
 	
 	public void updateProfile(){
-		if(!postitTF.getText().equals("")){
-			FileIO.updateFile(userObj.getUser() + ": " + postitTF.getText() + "\n", FileIO.getFile());
+		String temp = postitTF.getText();
+		if(!temp.equals("")){
+			FileIO.updateFile(userObj.getUser() + ": " +  temp + "\n", FileIO.getFile());
 			if(!userObj.getUser().contentEquals("GUEST")){
-				FileIO.updateFile(userObj.getUser() + ": " + postitTF.getText() + "\n", FileIO.getGuestFile());
+				FileIO.updateFile(userObj.getUser() + ": " + temp + "\n", FileIO.getGuestFile());
 			}
-			profileTF.append(userObj.getUser() + ": " + postitTF.getText() + "\n");
+			profileTF.append(userObj.getUser() + ": " + temp + "\n");
 			profileTF.setCaretPosition(profileTF.getDocument().getLength());
 			postitTF.setText("");
 			postitTF.requestFocus();
+			//search for user or topic tags 
+			Search.searchForTag(temp);
 		}else{
 			postitTF.requestFocus();
 		}

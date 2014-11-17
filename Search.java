@@ -3,24 +3,19 @@ import java.util.regex.Pattern;
 
 
 public class Search {
-	public static String searchForTagUser(String src){
-		String user="";
-		Matcher matcher = Pattern.compile("@(\\S+)").matcher(src);
-		while (matcher.find()) {
-			String temp = matcher.group(1);
-			if(!temp.contains(".com")){
-				user += temp + "\n";
+	
+	public static void searchForTag(String entry){
+		Matcher matcherUser = Pattern.compile("@(\\S+)").matcher(entry);
+		Matcher matcherTopic = Pattern.compile("(#\\w+)").matcher(entry);
+		while (matcherUser.find()) {
+			String user = matcherUser.group(1);
+			if(!user.contains(".com")){
+				FileIO.tagWrite(user, entry);
 			}
 		}
-		return user;
-	}
-	
-	public static String searchForTopic(String src){
-		String topic="";
-		Matcher matcher = Pattern.compile("#(\\w+)").matcher(src);
-		while (matcher.find()) {
-			topic += matcher.group(1) + "\n";
+		while (matcherTopic.find()) {
+			String topic = matcherTopic.group(1);
+			FileIO.tagWrite(topic, entry);			
 		}
-		return topic;
 	}
 }
