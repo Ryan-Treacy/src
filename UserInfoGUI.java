@@ -37,6 +37,7 @@ public class UserInfoGUI {
 	private JLabel searchLBL;
 	private JScrollPane profileSP;
 	private JScrollPane userProfileSP;
+	private JButton btnPrivatePost;
 	/**
 	 * Launch the application.
 	 */
@@ -159,7 +160,7 @@ public class UserInfoGUI {
 			}
 		});
 		postitBTN.setToolTipText("Click to POST IT!");
-		postitBTN.setBounds(80, 63, 280, 25);
+		postitBTN.setBounds(36, 63, 188, 25);
 		frmUmwCompsciPost.getContentPane().add(postitBTN);
 		
 		lblEnterTextBelow = new JLabel("Currently logged in as:  " + userObj.getUser());
@@ -210,6 +211,12 @@ public class UserInfoGUI {
 		searchLBL.setBounds(291, 348, 600, 21);
 		frmUmwCompsciPost.getContentPane().add(searchLBL);
 		searchLBL.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		
+		btnPrivatePost = new JButton("Private Post");
+		btnPrivatePost.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		btnPrivatePost.setBounds(253, 64, 133, 25);
+		btnPrivatePost.setEnabled(false);
+		frmUmwCompsciPost.getContentPane().add(btnPrivatePost);
 	}
 	
 	public void updateProfile(){
@@ -221,7 +228,7 @@ public class UserInfoGUI {
 			}
 			profileTF.append(userObj.getUser() + ": " + temp + "\n");
 			profileTF.setCaretPosition(profileTF.getDocument().getLength());
-			if(userProfileTA.isVisible()){
+			if(!userObj.getUser().contentEquals("GUEST")){
 				userProfileTA.append(userObj.getUser() + ": " + temp + "\n");
 				
 			}
@@ -291,6 +298,7 @@ public class UserInfoGUI {
 				disconnectBTN.setEnabled(true);
 				passwordTF.setVisible(false);
 				passwordLBL.setVisible(false);
+				btnPrivatePost.setEnabled(true);
 				userLBL.setText("Signed is as:");
 				loadUserProfile();
 				lblEnterTextBelow.setText("Currently logged in as:  " + userObj.getUser());
