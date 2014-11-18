@@ -171,7 +171,7 @@ public class UserInfoGUI {
 		profileSP = new JScrollPane();
 		profileSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		profileSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		profileSP.setBounds(36, 97, 603, 243);
+		profileSP.setBounds(36, 97, 603, 161);
 		frmUmwCompsciPost.getContentPane().add(profileSP);
 		
 		profileTF = new JTextArea();
@@ -182,7 +182,7 @@ public class UserInfoGUI {
 		profileTF.setLineWrap(true);
 		
 		userProfileSP = new JScrollPane();
-		userProfileSP.setBounds(36, 381, 603, 108);
+		userProfileSP.setBounds(36, 340, 603, 149);
 		frmUmwCompsciPost.getContentPane().add(userProfileSP);
 		
 		userProfileTA = new JTextArea();
@@ -193,7 +193,7 @@ public class UserInfoGUI {
 		
 		topicTF = new JTextField();
 		topicTF.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		topicTF.setBounds(36, 344, 158, 25);
+		topicTF.setBounds(36, 303, 250, 25);
 		frmUmwCompsciPost.getContentPane().add(topicTF);
 		topicTF.setColumns(10);
 		
@@ -204,11 +204,11 @@ public class UserInfoGUI {
 			}
 		});
 		topicBTN.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		topicBTN.setBounds(195, 344, 91, 25);
+		topicBTN.setBounds(298, 303, 91, 25);
 		frmUmwCompsciPost.getContentPane().add(topicBTN);
 		
 		searchLBL = new JLabel("Search for a @User or #Topic.");
-		searchLBL.setBounds(291, 348, 600, 21);
+		searchLBL.setBounds(36, 270, 600, 21);
 		frmUmwCompsciPost.getContentPane().add(searchLBL);
 		searchLBL.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		
@@ -217,6 +217,17 @@ public class UserInfoGUI {
 		btnPrivatePost.setBounds(253, 64, 133, 25);
 		btnPrivatePost.setEnabled(false);
 		frmUmwCompsciPost.getContentPane().add(btnPrivatePost);
+		
+		JButton btnSubcribeTo = new JButton("Subcribe to");
+		btnSubcribeTo.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		btnSubcribeTo.setEnabled(false);
+		btnSubcribeTo.setBounds(401, 303, 117, 25);
+		frmUmwCompsciPost.getContentPane().add(btnSubcribeTo);
+		
+		JLabel subLBL = new JLabel("");
+		subLBL.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		subLBL.setBounds(522, 303, 117, 25);
+		frmUmwCompsciPost.getContentPane().add(subLBL);
 	}
 	
 	public void updateProfile(){
