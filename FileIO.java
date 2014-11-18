@@ -11,8 +11,15 @@ public class FileIO {
 	
 	private static UserInfo userObj = new UserInfo();
 	private static File userFile; 
-	private static File guestFile = new File("GUEST.java");
+	private static File guestFile;
 	private static File tagFile;
+	
+	public static void createGuestFile(){
+		guestFile = new File("GUEST.java");
+		if(!guestFile.exists()){
+			updateFile(userObj.getPassword() + "\n", guestFile);
+		}
+	}
 	
 	public static void tagWrite(String tag, String entry){
 		tagFile = new File(tag + ".java");
