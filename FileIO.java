@@ -43,6 +43,18 @@ public class FileIO {
 		} 
 	}
 	
+	public void createProfile(){
+		String temp = "";
+		int result;
+		result = JOptionPane.showConfirmDialog(null, "Would you like to create a profile about yourself?",null, JOptionPane.YES_NO_OPTION);
+		if(result == JOptionPane.YES_OPTION){
+			temp += ("Name: " + JOptionPane.showInputDialog(null, "Enter your name.") + "\n");
+			temp += ("Class: " + JOptionPane.showInputDialog(null, "What UMW class are you?") + "\n");
+			temp += ("Phone Number: " + JOptionPane.showInputDialog(null, "What is your phone number?") + "\n\n" + "Posts:\n");
+			updateFile(temp,getFile());
+		} 
+	}
+	
 	public boolean checkPassword(){
 		boolean temp = false;
 		try {
@@ -79,7 +91,8 @@ public class FileIO {
 				temppass = JOptionPane.showInputDialog(null, "Password doesn't match, please re-enter.");
 			}
 			JOptionPane.showMessageDialog(null, "User " + userObj.getUser() + " was created");
-			addPassword();
+			addPassword();	
+			createProfile();
 			temp = true;
 		}
 		return temp;
