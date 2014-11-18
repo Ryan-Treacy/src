@@ -192,6 +192,7 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().add(userProfileSP);
 		
 		userProfileTA = new JTextArea();
+		userProfileTA.setEditable(false);
 		userProfileTA.setVisible(false);
 		userProfileTA.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		userProfileTA.setWrapStyleWord(true);
@@ -226,8 +227,10 @@ public class UserInfoGUI {
 			}
 			profileTF.append(userObj.getUser() + ": " + temp + "\n");
 			profileTF.setCaretPosition(profileTF.getDocument().getLength());
-			userProfileTA.append(userObj.getUser() + ": " + temp + "\n");
-			userProfileTA.setCaretPosition(0);
+			if(userProfileTA.isVisible()){
+				userProfileTA.append(userObj.getUser() + ": " + temp + "\n");
+				
+			}
 			postitTF.setText("");
 			postitTF.requestFocus();
 			//search for user or topic tags 
