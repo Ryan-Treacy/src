@@ -15,19 +15,21 @@ public class FileIO {
 	private static File tagFile;
 	
 	public static void createGuestFile(){
+		String welcome = "Welcome To UMW CompSci POST IT!\nYou are currently logged in on the GUEST account.\nYou can post and view messages on the GUEST page from the guest account.\nCreate a personal account or sign in entering your username and password above.\n\n";
 		guestFile = new File("GUEST.java");
 		if(!guestFile.exists()){
 			updateFile(userObj.getPassword() + "\n", guestFile);
+			updateFile(welcome + "\n", guestFile);
 		}
 	}
 	
 	public static void tagWrite(String tag, String entry){
 		tagFile = new File(tag + ".java");
 		if(tag.contains("#")){
-			updateFile(entry + "\n", tagFile);
+			updateFile(userObj.getUser() + ": " + entry + "\n", tagFile);
 		}else{
 			if(tagFile.exists()){
-				updateFile(entry + "\n", tagFile);
+				updateFile(userObj.getUser() + ": " + entry + "\n", tagFile);
 			}
 		}
 	}	
