@@ -34,7 +34,7 @@ public class UserInfoGUI {
 	private JTextField topicTF;
 	private JTextArea userProfileTA;
 	private JButton topicBTN;
-	private JLabel userProfileLBL;
+	private JLabel searchLBL;
 	private JScrollPane profileSP;
 	private JScrollPane userProfileSP;
 	/**
@@ -180,29 +180,19 @@ public class UserInfoGUI {
 		profileTF.setWrapStyleWord(true);
 		profileTF.setLineWrap(true);
 		
-		userProfileLBL = new JLabel("");
-		userProfileLBL.setVisible(false);
-		userProfileLBL.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		userProfileLBL.setBounds(36, 344, 270, 25);
-		frmUmwCompsciPost.getContentPane().add(userProfileLBL);
-		
 		userProfileSP = new JScrollPane();
-		userProfileSP.setVisible(false);
 		userProfileSP.setBounds(36, 381, 603, 108);
 		frmUmwCompsciPost.getContentPane().add(userProfileSP);
 		
 		userProfileTA = new JTextArea();
 		userProfileTA.setEditable(false);
-		userProfileTA.setVisible(false);
 		userProfileTA.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		userProfileTA.setWrapStyleWord(true);
 		userProfileSP.setViewportView(userProfileTA);
 		
 		topicTF = new JTextField();
-		topicTF.setVisible(false);
 		topicTF.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		topicTF.setText("example... #topic");
-		topicTF.setBounds(324, 345, 158, 25);
+		topicTF.setBounds(36, 344, 158, 25);
 		frmUmwCompsciPost.getContentPane().add(topicTF);
 		topicTF.setColumns(10);
 		
@@ -212,10 +202,14 @@ public class UserInfoGUI {
 				//enter code to open #topics
 			}
 		});
-		topicBTN.setVisible(false);
 		topicBTN.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		topicBTN.setBounds(494, 345, 145, 25);
+		topicBTN.setBounds(195, 344, 91, 25);
 		frmUmwCompsciPost.getContentPane().add(topicBTN);
+		
+		searchLBL = new JLabel("Search for a @User or #Topic.");
+		searchLBL.setBounds(291, 348, 600, 21);
+		frmUmwCompsciPost.getContentPane().add(searchLBL);
+		searchLBL.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 	}
 	
 	public void updateProfile(){
@@ -295,20 +289,12 @@ public class UserInfoGUI {
 			if(newUser.newUserCheck()){
 				connectBTN.setEnabled(false);
 				disconnectBTN.setEnabled(true);
-				postitTF.setEditable(true);
-				postitBTN.setEnabled(true);
 				passwordTF.setVisible(false);
 				passwordLBL.setVisible(false);
 				userLBL.setText("Signed is as:");
 				loadUserProfile();
 				lblEnterTextBelow.setText("Currently logged in as:  " + userObj.getUser());
 				postitTF.requestFocus();
-				userProfileLBL.setText(userObj.getUser() + "'s Profile:");
-				userProfileLBL.setVisible(true);
-				userProfileSP.setVisible(true);
-				userProfileTA.setVisible(true);
-				topicTF.setVisible(true);
-				topicBTN.setVisible(true);
 			}
 		}
 	}
