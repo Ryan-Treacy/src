@@ -13,6 +13,52 @@ public class FileIO {
 	private static File userFile; 
 	private static File guestFile;
 	private static File tagFile;
+	private static File subFile;
+	private static File postFile;
+	
+	public static void addToSubs(String str){
+		subFile = new File(str + "Subs.java");
+		boolean exists = false;
+		if(subFile.exists()){
+			try {
+				Scanner input = new Scanner(subFile);
+				while(input.hasNextLine()){
+					if(input.nextLine().contentEquals(userObj.getUser())){
+						exists = true;
+					}
+				}
+				input.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		if(!exists){
+			updateFile(userObj.getUser() + "\n", subFile);
+		}else{
+			JOptionPane.showMessageDialog(null, "You are already subscribed.");
+		}
+	}
+	
+	public static void postToSubs(String str){
+		if(!userObj.getUser().contentEquals("GUEST")){
+			subFile = new File(userObj.getUser() + "Subs.java");
+			if(subFile.exists()){
+				try {
+					Scanner input = new Scanner(subFile);
+					while(input.hasNextLine()){
+						String tempFileName = input.nextLine();	
+						postFile = new File(tempFileName + ".java");
+						if(postFile.exists()){
+							updateFile(userObj.getUser() + ": " + str + "\n", postFile);
+						}
+					}
+					input.close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	
 	public static void createGuestFile(){
 		String welcome = "Welcome To UMW CompSci POST IT!\nYou are currently logged in on the GUEST account.\nYou can post and view messages on the GUEST page from the guest account.\nCreate a personal account or sign in entering your username and password above.\n\n";
@@ -23,13 +69,28 @@ public class FileIO {
 		}
 	}
 	
+	public static boolean tagSearch(String str){
+			if(str.startsWith("@")){
+				str = str.substring(1);
+			}
+			setTagFile(new File(str + ".java"));
+			if(getTagFile().exists()){
+				return true;
+			}else{
+				JOptionPane.showMessageDialog(null, "User/Topic does not exist.");
+				return false;
+			}
+	}
+	
+	
+	
 	public static void tagWrite(String tag, String entry){
-		tagFile = new File(tag + ".java");
-		if(tag.contains("#")){
-			updateFile(userObj.getUser() + ": " + entry + "\n", tagFile);
+		setTagFile(new File(tag + ".java"));
+		if(tag.startsWith("#")){
+			updateFile(userObj.getUser() + ": " + entry + "\n", getTagFile());
 		}else{
-			if(tagFile.exists()){
-				updateFile(userObj.getUser() + ": " + entry + "\n", tagFile);
+			if(getTagFile().exists()){
+				updateFile(userObj.getUser() + ": " + entry + "\n", getTagFile());
 			}
 		}
 	}	
@@ -129,5 +190,21 @@ public class FileIO {
 
 	public static void setGuestFile(File guestFile) {
 		FileIO.guestFile = guestFile;
+	}
+
+	public static File getTagFile() {
+		return tagFile;
+	}
+
+	public static void setTagFile(File tagFile) {
+		FileIO.tagFile = tagFile;
+	}
+
+	public static File getSubFile() {
+		return subFile;
+	}
+
+	public static void setSubFile(File subFile) {
+		FileIO.subFile = subFile;
 	}
 }

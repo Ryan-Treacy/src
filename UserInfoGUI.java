@@ -38,6 +38,8 @@ public class UserInfoGUI {
 	private JScrollPane profileSP;
 	private JScrollPane userProfileSP;
 	private JButton btnPrivatePost;
+	private JButton subBTN;
+	private JLabel subLBL;
 	/**
 	 * Launch the application.
 	 */
@@ -196,11 +198,41 @@ public class UserInfoGUI {
 		topicTF.setBounds(36, 303, 250, 25);
 		frmUmwCompsciPost.getContentPane().add(topicTF);
 		topicTF.setColumns(10);
-		
+		topicTF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(!topicTF.getText().contentEquals("")  && !topicTF.getText().contentEquals("GUEST")){
+					if(FileIO.tagSearch(topicTF.getText())){
+						loadTopic();
+						if(!topicTF.getText().startsWith("#")){
+							if(!userObj.getUser().contentEquals("GUEST")){
+								subBTN.setEnabled(true);
+							}
+							subLBL.setText(topicTF.getText());
+						}else{
+							subBTN.setEnabled(false);
+							subLBL.setText("");
+						}
+					}
+				}
+			}
+		});	
 		topicBTN = new JButton("Search");
 		topicBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//enter code to open #topics
+				if(!topicTF.getText().contentEquals("")  && !topicTF.getText().contentEquals("GUEST")){
+					if(FileIO.tagSearch(topicTF.getText())){
+						loadTopic();
+						if(!topicTF.getText().startsWith("#")){
+							if(!userObj.getUser().contentEquals("GUEST")){
+								subBTN.setEnabled(true);
+							}
+							subLBL.setText(topicTF.getText());
+						}else{
+							subBTN.setEnabled(false);
+							subLBL.setText("");
+						}
+					}
+				}
 			}
 		});
 		topicBTN.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -213,21 +245,47 @@ public class UserInfoGUI {
 		searchLBL.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		
 		btnPrivatePost = new JButton("Private Post");
+		btnPrivatePost.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				privatePost();
+			}
+		});
 		btnPrivatePost.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		btnPrivatePost.setBounds(253, 64, 133, 25);
 		btnPrivatePost.setEnabled(false);
 		frmUmwCompsciPost.getContentPane().add(btnPrivatePost);
 		
-		JButton btnSubcribeTo = new JButton("Subcribe to");
-		btnSubcribeTo.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		btnSubcribeTo.setEnabled(false);
-		btnSubcribeTo.setBounds(401, 303, 117, 25);
-		frmUmwCompsciPost.getContentPane().add(btnSubcribeTo);
+		subBTN = new JButton("Subcribe to");
+		subBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FileIO.addToSubs(topicTF.getText());
+			}
+		});
+		subBTN.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		subBTN.setEnabled(false);
+		subBTN.setBounds(401, 303, 117, 25);
+		frmUmwCompsciPost.getContentPane().add(subBTN);
 		
-		JLabel subLBL = new JLabel("");
+		subLBL = new JLabel("");
 		subLBL.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		subLBL.setBounds(522, 303, 117, 25);
 		frmUmwCompsciPost.getContentPane().add(subLBL);
+	}
+	
+	public void privatePost(){
+		String temp = postitTF.getText();
+		if(!temp.equals("")){
+			FileIO.updateFile(userObj.getUser() + ": " +  temp + "\n", FileIO.getFile());
+			FileIO.postToSubs(temp);
+			profileTF.append(userObj.getUser() + ": " + temp + "\n");
+			profileTF.setCaretPosition(profileTF.getDocument().getLength());
+			postitTF.setText("");
+			postitTF.requestFocus();
+			//search for user or topic tags 
+			Search.searchForTag(temp);
+		}else{
+			postitTF.requestFocus();
+		}
 	}
 	
 	public void updateProfile(){
@@ -237,18 +295,32 @@ public class UserInfoGUI {
 			if(!userObj.getUser().contentEquals("GUEST")){
 				FileIO.updateFile(userObj.getUser() + ": " + temp + "\n", FileIO.getGuestFile());
 			}
+			FileIO.postToSubs(temp);
 			profileTF.append(userObj.getUser() + ": " + temp + "\n");
 			profileTF.setCaretPosition(profileTF.getDocument().getLength());
-			if(!userObj.getUser().contentEquals("GUEST")){
-				userProfileTA.append(userObj.getUser() + ": " + temp + "\n");
-				
-			}
 			postitTF.setText("");
 			postitTF.requestFocus();
 			//search for user or topic tags 
 			Search.searchForTag(temp);
 		}else{
 			postitTF.requestFocus();
+		}
+	}
+	
+	public void loadTopic(){
+		userProfileTA.setText("");
+		try {
+			Scanner input = new Scanner(FileIO.getTagFile());
+			if(!FileIO.getTagFile().getName().startsWith("#")){
+				input.nextLine();
+			}
+			while(input.hasNextLine()){
+				userProfileTA.append(input.nextLine() + "\n");
+				userProfileTA.setCaretPosition(0);
+			}
+			input.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 	

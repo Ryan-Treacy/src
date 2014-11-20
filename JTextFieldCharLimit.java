@@ -4,10 +4,9 @@ import javax.swing.text.PlainDocument;
 
 
 public class JTextFieldCharLimit extends PlainDocument{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -6193260351538523849L;
+	
 	private int limit = 140;
 	
 	public JTextFieldCharLimit(int limit){
