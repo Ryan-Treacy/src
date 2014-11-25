@@ -142,6 +142,7 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().add(disconnectBTN);
 		
 		postitTF = new JTextField();
+		postitTF.setEditable(false);
 		postitTF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				updateProfile();
@@ -155,6 +156,7 @@ public class UserInfoGUI {
 		postitTF.setColumns(10);
 		
 		postitBTN = new JButton("POST IT!");
+		postitBTN.setEnabled(false);
 		postitBTN.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		postitBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -194,6 +196,7 @@ public class UserInfoGUI {
 		userProfileSP.setViewportView(userProfileTA);
 		
 		topicTF = new JTextField();
+		topicTF.setEditable(false);
 		topicTF.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		topicTF.setBounds(36, 303, 250, 25);
 		frmUmwCompsciPost.getContentPane().add(topicTF);
@@ -217,6 +220,7 @@ public class UserInfoGUI {
 			}
 		});	
 		topicBTN = new JButton("Search");
+		topicBTN.setEnabled(false);
 		topicBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!topicTF.getText().contentEquals("")  && !topicTF.getText().contentEquals("GUEST")){
@@ -385,6 +389,10 @@ public class UserInfoGUI {
 				userLBL.setText("Signed is as:");
 				loadUserProfile();
 				lblEnterTextBelow.setText("Currently logged in as:  " + userObj.getUser());
+				postitTF.setEditable(true);
+				postitBTN.setEnabled(true);
+				topicTF.setEditable(true);
+				topicBTN.setEnabled(true);
 				postitTF.requestFocus();
 			}
 		}

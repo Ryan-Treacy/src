@@ -61,7 +61,7 @@ public class FileIO {
 	}
 	
 	public static void createGuestFile(){
-		String welcome = "Welcome To UMW CompSci POST IT!\nYou are currently logged in on the GUEST account.\nYou can post and view messages on the GUEST page from the guest account.\nCreate a personal account or sign in entering your username and password above.\n\n";
+		String welcome = "Welcome To UMW CompSci POST IT!\nYou are currently logged in on the GUEST account.\nYou can view public messages on the GUEST page from the guest account.\nCreate a personal account or sign in entering your username and password above.\n\n";
 		guestFile = new File("GUEST.java");
 		if(!guestFile.exists()){
 			updateFile(userObj.getPassword() + "\n", guestFile);
