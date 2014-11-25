@@ -66,7 +66,8 @@ public class UserInfoGUI {
 	}
 
 	/**
-	 *Initialize the contents of the frame. Also adds what actions to perform when clicked/key press.
+	 *Initialize the contents of the frame. Also adds what actions to perform when clicked/key press to the
+	 *buttons and text fields.
 	 */
 	private void initialize() {
 		frmUmwCompsciPost = new JFrame();
