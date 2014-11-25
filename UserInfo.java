@@ -1,7 +1,11 @@
 
 public class UserInfo {
+	
+	// Default login information.
 	private String user = "GUEST";	
 	private String password = "password";
+	
+	// Getters and Setters
 	public String getUser() {
 		return user;
 	}

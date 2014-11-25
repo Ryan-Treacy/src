@@ -18,6 +18,7 @@ import java.util.Scanner;
 
 public class UserInfoGUI {
 	
+	// Components of the GUI
 	private int charLimit = 140;
 	private JFrame frmUmwCompsciPost;
 	private JTextField userTF;
@@ -65,7 +66,7 @@ public class UserInfoGUI {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 *Initialize the contents of the frame. Also adds what actions to perform when clicked/key press.
 	 */
 	private void initialize() {
 		frmUmwCompsciPost = new JFrame();
@@ -81,7 +82,7 @@ public class UserInfoGUI {
 		userTF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(passwordTF.getText().isEmpty()){
-					passwordTF.requestFocus();
+					passwordTF.requestFocus(); 
 				}else{
 					validUserPass();
 				}
@@ -203,7 +204,7 @@ public class UserInfoGUI {
 		topicTF.setColumns(10);
 		topicTF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(!topicTF.getText().contentEquals("")  && !topicTF.getText().contentEquals("GUEST")){
+				if(!topicTF.getText().contentEquals("")  && !topicTF.getText().contentEquals("GUEST")){ 
 					if(FileIO.tagSearch(topicTF.getText())){
 						loadTopic();
 						if(!topicTF.getText().startsWith("#")){
@@ -276,6 +277,7 @@ public class UserInfoGUI {
 		frmUmwCompsciPost.getContentPane().add(subLBL);
 	}
 	
+	// Posts to only the people who are subscribed to the logged in user.
 	public void privatePost(){
 		String temp = postitTF.getText();
 		if(!temp.equals("")){
@@ -292,6 +294,7 @@ public class UserInfoGUI {
 		}
 	}
 	
+	//  This updates the Profile text field part of the GUI when a user searches for something.
 	public void updateProfile(){
 		String temp = postitTF.getText();
 		if(!temp.equals("")){
@@ -311,6 +314,7 @@ public class UserInfoGUI {
 		}
 	}
 	
+	//  This updates the Profile text field part of the GUI when a user searches for something.
 	public void loadTopic(){
 		userProfileTA.setText("");
 		try {
@@ -328,6 +332,7 @@ public class UserInfoGUI {
 		}
 	}
 	
+	// This is what is visible by default when the program is started.  This is the GUEST fule that everyone can see.
 	public void loadGuestProfile(){
 		try {
 			Scanner input = new Scanner(FileIO.getFile());
@@ -342,6 +347,7 @@ public class UserInfoGUI {
 		}
 	}
 	
+	// This loads a users profile when they signin or when someone searches for them.
 	public void loadUserProfile(){
 		try {
 			Scanner input = new Scanner(FileIO.getFile());
@@ -356,6 +362,7 @@ public class UserInfoGUI {
 		}
 	}
 	
+	//  Default log in screen. 
 	public void guestSignon(){
 		FileIO newUser = new FileIO();
 		newUser.setNewUser(userObj);
@@ -366,6 +373,8 @@ public class UserInfoGUI {
 			postitTF.requestFocus();
 		}
 	}
+	
+	// This validates a users password.  If the password is correct, changes the GUI components to accept privileged user actions.
 	public void validUserPass(){
 		userObj.setUser(userTF.getText());
 		userObj.setPassword(passwordTF.getText());

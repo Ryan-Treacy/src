@@ -16,6 +16,9 @@ public class FileIO {
 	private static File subFile;
 	private static File postFile;
 	
+	//This checks to see if a user subscriber file exists.  If it doesn't, it creates it and adds a name to the list.  If it does exist,
+	//		it will check the list to see if the name is on the list, if it is it lets the user know they are allready subcribes, if not,
+	//		the user is added to the list.
 	public static void addToSubs(String str){
 		subFile = new File(str + "Subs.java");
 		boolean exists = false;
@@ -39,6 +42,7 @@ public class FileIO {
 		}
 	}
 	
+	//  This adds the posted text from a user to all of that users subscribers files.
 	public static void postToSubs(String str){
 		if(!userObj.getUser().contentEquals("GUEST")){
 			subFile = new File(userObj.getUser() + "Subs.java");
@@ -60,6 +64,7 @@ public class FileIO {
 		}
 	}
 	
+	// This creates a guest file with default greeting.  This only happens the first time the program is run.
 	public static void createGuestFile(){
 		String welcome = "Welcome To UMW CompSci POST IT!\nYou are currently logged in on the GUEST account.\nYou can view public messages on the GUEST page from the guest account.\nCreate a personal account or sign in entering your username and password above.\n\n";
 		guestFile = new File("GUEST.java");
@@ -69,6 +74,8 @@ public class FileIO {
 		}
 	}
 	
+	
+	// This searches to see if a user file or topic file exists when the user searches for it.
 	public static boolean tagSearch(String str){
 			if(str.startsWith("@")){
 				str = str.substring(1);
@@ -83,7 +90,7 @@ public class FileIO {
 	}
 	
 	
-	
+	// This creates a topic file or adds to the existing file when a user tags one #topic.  It also writes to user files if they are tagged @user
 	public static void tagWrite(String tag, String entry){
 		setTagFile(new File(tag + ".java"));
 		if(tag.startsWith("#")){
@@ -95,10 +102,7 @@ public class FileIO {
 		}
 	}	
 	
-	public void setNewUser(UserInfo userObj){
-		FileIO.userObj = userObj;
-	}
-	
+	// adds the password as the first line in a user file when a new user is created.
 	public void addPassword(){
 		try {
 			PrintWriter output = new PrintWriter(getFile());
@@ -109,6 +113,7 @@ public class FileIO {
 		} 
 	}
 	
+	// This prompts the user for information to store as the first lines in their profile when a new user is created.
 	public void createProfile(){
 		String temp = "";
 		int result;
@@ -121,6 +126,7 @@ public class FileIO {
 		} 
 	}
 	
+	// This validates the users password.
 	public boolean checkPassword(){
 		boolean temp = false;
 		try {
@@ -139,6 +145,8 @@ public class FileIO {
 		return temp;
 	}
 	
+	// This checks to user if the user is new or returning.  If new user, calls functions to create new files. if returning user,
+	//		calls the validate password functions.
 	public boolean newUserCheck(){
 		boolean temp;
 		setFile(new File(userObj.getUser() + ".java"));
@@ -164,6 +172,7 @@ public class FileIO {
 		return temp;
 	}
 	
+	// This is used to update files with new posts from user. 
 	public static void updateFile(String str, File file){
 		try {
 			FileWriter output = new FileWriter(file, true);
@@ -174,8 +183,12 @@ public class FileIO {
 		}
 	}
 	
+	// Getters and Setters. 
 	
-
+	public void setNewUser(UserInfo userObj){
+		FileIO.userObj = userObj;
+	}
+	
 	public static File getFile() {
 		return userFile;
 	}
