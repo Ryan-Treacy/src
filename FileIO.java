@@ -20,7 +20,10 @@ public class FileIO {
 	//		it will check the list to see if the name is on the list, if it is it lets the user know they are allready subcribes, if not,
 	//		the user is added to the list.
 	public static void addToSubs(String str){
-		subFile = new File(str + "Subs.java");
+		if(str.startsWith("@")){
+			str = str.substring(1);
+		}
+		subFile = new File(str + "Subs.UMW");
 		boolean exists = false;
 		if(subFile.exists()){
 			try {
@@ -37,6 +40,7 @@ public class FileIO {
 		}
 		if(!exists){
 			updateFile(userObj.getUser() + "\n", subFile);
+			JOptionPane.showMessageDialog(null, "You are now subscribed to " + str);
 		}else{
 			JOptionPane.showMessageDialog(null, "You are already subscribed.");
 		}
@@ -45,13 +49,13 @@ public class FileIO {
 	//  This adds the posted text from a user to all of that users subscribers files.
 	public static void postToSubs(String str){
 		if(!userObj.getUser().contentEquals("GUEST")){
-			subFile = new File(userObj.getUser() + "Subs.java");
+			subFile = new File(userObj.getUser() + "Subs.UMW");
 			if(subFile.exists()){
 				try {
 					Scanner input = new Scanner(subFile);
 					while(input.hasNextLine()){
 						String tempFileName = input.nextLine();	
-						postFile = new File(tempFileName + ".java");
+						postFile = new File(tempFileName + ".UMW");
 						if(postFile.exists()){
 							updateFile(userObj.getUser() + ": " + str + "\n", postFile);
 						}
@@ -67,7 +71,7 @@ public class FileIO {
 	// This creates a guest file with default greeting.  This only happens the first time the program is run.
 	public static void createGuestFile(){
 		String welcome = "Welcome To UMW CompSci POST IT!\nYou are currently logged in on the GUEST account.\nYou can view public messages on the GUEST page from the guest account.\nCreate a personal account or sign in entering your username and password above.\n\n";
-		guestFile = new File("GUEST.java");
+		guestFile = new File("GUEST.UMW");
 		if(!guestFile.exists()){
 			updateFile(userObj.getPassword() + "\n", guestFile);
 			updateFile(welcome + "\n", guestFile);
@@ -80,7 +84,7 @@ public class FileIO {
 			if(str.startsWith("@")){
 				str = str.substring(1);
 			}
-			setTagFile(new File(str + ".java"));
+			setTagFile(new File(str + ".UMW"));
 			if(getTagFile().exists()){
 				return true;
 			}else{
@@ -92,7 +96,7 @@ public class FileIO {
 	
 	// This creates a topic file or adds to the existing file when a user tags one #topic.  It also writes to user files if they are tagged @user
 	public static void tagWrite(String tag, String entry){
-		setTagFile(new File(tag + ".java"));
+		setTagFile(new File(tag + ".UMW"));
 		if(tag.startsWith("#")){
 			updateFile(userObj.getUser() + ": " + entry + "\n", getTagFile());
 		}else{
@@ -149,7 +153,7 @@ public class FileIO {
 	//		calls the validate password functions.
 	public boolean newUserCheck(){
 		boolean temp;
-		setFile(new File(userObj.getUser() + ".java"));
+		setFile(new File(userObj.getUser() + ".UMW"));
 		if(getFile().exists()){
 			if(checkPassword()){
 				temp = true;
