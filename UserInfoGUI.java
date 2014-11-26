@@ -81,6 +81,7 @@ public class UserInfoGUI {
 		userTF.setToolTipText("Enter exisiting or desired username");
 		userTF.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		userTF.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
 				if(passwordTF.getText().isEmpty()){
 					passwordTF.requestFocus(); 
@@ -333,7 +334,7 @@ public class UserInfoGUI {
 		}
 	}
 	
-	// This is what is visible by default when the program is started.  This is the GUEST fule that everyone can see.
+	// This is what is visible by default when the program is started.  This is the GUEST file that everyone can see.
 	public void loadGuestProfile(){
 		try {
 			Scanner input = new Scanner(FileIO.getFile());
@@ -376,6 +377,7 @@ public class UserInfoGUI {
 	}
 	
 	// This validates a users password.  If the password is correct, changes the GUI components to accept privileged user actions.
+	@SuppressWarnings("deprecation")
 	public void validUserPass(){
 		userObj.setUser(userTF.getText());
 		userObj.setPassword(passwordTF.getText());
